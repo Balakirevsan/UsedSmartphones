@@ -15,16 +15,11 @@ app.add_middleware(
 )
 
 app.include_router(db_check.router)
-
 app.include_router(user_route.router, prefix="/api")
 
 @app.get("/")
 def read_root():
     return {"message": "Welcome to the FastAPI backend!"}
-
-@app.get("/")
-async def root():
-    return {"message": "API is running"}
 
 if __name__ == "__main__":
     import uvicorn
