@@ -5,13 +5,17 @@ Modern web application built with React frontend and FastAPI backend, using Mong
 ## Technology Stack
 
 ### Frontend
+
 - React
 - React Router
 - Axios
-- Material-UI/Tailwind CSS
+- Bootstrap or Material-UI/Tailwind CSS
 - Redux/Context API
+- Vite
+- Proptypes
 
 ### Backend
+
 - FastAPI
 - MongoDB Atlas
 - PyMongo
@@ -19,6 +23,7 @@ Modern web application built with React frontend and FastAPI backend, using Mong
 - JWT Authentication
 
 ## Project Structure
+
 ```bash
 project/
 ├── frontend/
@@ -34,3 +39,4 @@ project/
 │   ├── requirements.txt
 │   └── main.py
 └── README.md
+```
