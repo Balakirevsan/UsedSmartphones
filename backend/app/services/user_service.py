@@ -1,7 +1,6 @@
 from typing import List
 from app.models.user import User
 from app.config.database import db
-from bson import ObjectId
 import bcrypt
 
 class UserService:
