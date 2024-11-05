@@ -1,28 +1,35 @@
-// scr/pages/Users.tsx
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../api/axiosInstance";
 import { User } from "../types/user";
+import { useLocation } from "react-router-dom";
 
 const Users: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const location = useLocation();
 
+  const fetchUsers = async () => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get("/users");
+      setUsers(response.data);
+    } catch (err: any) {
+      setError(err.customMessage || "An unexpected error occurred.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Initial load
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axiosInstance.get("/users");
-        setUsers(response.data);
-      } catch (err: any) {
-        setError(err.customMessage || "An unexpected error occurred.");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchUsers();
-  }, []);
+    // Refresh when location state changes
+    if (location.state?.refresh) {
+      fetchUsers();
+    }
+  }, [location.state?.refresh]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div className="text-red-500">{error}</div>;
