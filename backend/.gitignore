@@ -2,3 +2,4 @@ backend/.env
 # Python cache files
 __pycache__/
 *.py[cod]
+.DS_Store
