@@ -14,3 +14,10 @@ async def create_user(user: User):
 async def get_users():
     users = await UserService.get_users()
     return users
+
+@router.delete("/users/{user_id}")
+async def delete_user(user_id: str):
+    success = await UserService.delete_user(user_id)
+    if not success:
+        raise HTTPException(status_code=404, detail="User not found")
+    return {"message": "User deleted successfully"}

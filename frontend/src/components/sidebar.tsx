@@ -1,10 +1,9 @@
 // src/components/Sidebar.tsx
 import React from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const handleUsersClick = (e: React.MouseEvent) => {
     e.preventDefault();

@@ -1,7 +1,11 @@
+import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import db_check
 from app.routes import user_route
+from app.routes import redis_route
+
+logging.basicConfig(level=logging.INFO)
 
 app = FastAPI()
 
@@ -16,6 +20,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(redis_route.router)
 
 app.include_router(db_check.router)
 app.include_router(user_route.router, prefix="/api")

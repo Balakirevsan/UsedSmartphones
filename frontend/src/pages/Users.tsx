@@ -22,13 +22,9 @@ const Users: React.FC = () => {
     }
   };
 
-  // Initial load
+  // Initial load and refresh when location state changes
   useEffect(() => {
     fetchUsers();
-    // Refresh when location state changes
-    if (location.state?.refresh) {
-      fetchUsers();
-    }
   }, [location.state?.refresh]);
 
   if (loading) return <div>Loading...</div>;
