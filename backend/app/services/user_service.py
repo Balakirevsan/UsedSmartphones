@@ -1,5 +1,6 @@
 from typing import List
 from app.models.user import User
+from app.models.role import Role  # Import Role model
 from app.config.database import db
 from app.config.redis_config import redis_client
 import bcrypt
@@ -13,6 +14,10 @@ class UserService:
     async def create_user(user: User) -> User:
         user_dict = user.dict()
         user_dict["hashed_password"] = bcrypt.hashpw(user.hashed_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        # Ensure role exists
+        role = await db["roles"].find_one({"id": user.role_id})
+        if not role:
+            raise ValueError("Invalid role ID")
         result = await db["users"].insert_one(user_dict)
         user.id = str(result.inserted_id)
         # Cache the user in Redis

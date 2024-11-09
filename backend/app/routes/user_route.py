@@ -7,8 +7,11 @@ router = APIRouter()
 
 @router.post("/users", response_model=User)
 async def create_user(user: User):
-    created_user = await UserService.create_user(user)
-    return created_user
+    try:
+        created_user = await UserService.create_user(user)
+        return created_user
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 @router.get("/users", response_model=List[User])
 async def get_users():

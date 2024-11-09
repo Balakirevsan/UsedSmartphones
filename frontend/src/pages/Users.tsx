@@ -5,12 +5,15 @@ import { useLocation } from "react-router-dom";
 
 const Users: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const location = useLocation();
 
   const fetchUsers = async () => {
-    setLoading(true);
+    const loadingTimer = setTimeout(() => {
+      setLoading(true);
+    }, 100);
+
     try {
       const response = await axiosInstance.get("/users");
       setUsers(response.data);
@@ -18,11 +21,11 @@ const Users: React.FC = () => {
       setError(err.customMessage || "An unexpected error occurred.");
       console.error(err);
     } finally {
+      clearTimeout(loadingTimer);
       setLoading(false);
     }
   };
 
-  // Initial load and refresh when location state changes
   useEffect(() => {
     fetchUsers();
   }, [location.state?.refresh]);
